@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/authentication/auth.service'
 
 
 @Component({
@@ -8,20 +9,25 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  public registrationForm: FormGroup;
+  public registrationForm!: FormGroup;
 
-  constructor() {
-    this.registrationForm = new FormGroup({
-      username: new FormControl(''),
-      email_phNo: new FormControl(''),
-      fullName: new FormControl(''),
-      password: new FormControl('')
+  constructor(private fb:FormBuilder, private ser: AuthService) {  }
+
+  ngOnInit(): void {
+    this.registrationForm =  this.fb.group({
+      username: this.fb.control(''),
+      email_phNo: this.fb.control(''),
+      fullName: this.fb.control(''),
+      password: this.fb.control('')
     })
   }
 
-
   onSubmit(){
     let data = this.registrationForm.value;
+    this.ser.registerData(data).subscribe(data => {
+      console.log(data)
+    })
     console.log(data);
+    this.ngOnInit()
   }
 }
