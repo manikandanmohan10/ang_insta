@@ -11,6 +11,7 @@ export class AuthService {
   app_url = ENVIRONMENT.api_url
 
   constructor(public http: HttpClient, public router: Router) { }
+
   registerData(data: any): Observable<any>{
     return this.http.post(`${this.app_url}/api/v1/register`, data)
   }
@@ -24,6 +25,10 @@ export class AuthService {
         return throwError(error)
       })
     )
+  }
+
+  getUser(): Observable<any>{
+    return this.http.get(`${this.app_url}/api/v1/getUser`)
   }
 
   // ngOnInit() {

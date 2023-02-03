@@ -26,8 +26,10 @@ export class RegisterComponent {
     let data = this.registrationForm.value;
     this.ser.registerData(data).subscribe(data => {
       console.log(data)
+      if(data.statusCode == 201){
+        this.ser.router.navigate(['/verification'])
+      }
     })
     console.log(data);
-    this.ngOnInit()
   }
 }
